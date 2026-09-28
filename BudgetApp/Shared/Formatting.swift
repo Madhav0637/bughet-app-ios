@@ -1,16 +1,6 @@
 import Foundation
 
 extension Int {
-    /// Whole rupees with Indian digit grouping, e.g. ₹1,23,456.
-    var inr: String {
-        formatted(.currency(code: "INR").precision(.fractionLength(0)).locale(Locale(identifier: "en_IN")))
-    }
-
-    /// Indian digit grouping without the ₹, e.g. 1,23,456. Used where the ₹ is drawn separately.
-    var indianGrouped: String {
-        formatted(.number.precision(.fractionLength(0)).locale(Locale(identifier: "en_IN")))
-    }
-
     /// "1 expense", "3 expenses".
     func counted(_ singular: String, _ plural: String? = nil) -> String {
         "\(self) \(self == 1 ? singular : plural ?? singular + "s")"

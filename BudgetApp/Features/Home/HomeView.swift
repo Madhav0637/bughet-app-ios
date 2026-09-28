@@ -4,6 +4,8 @@ import SwiftUI
 /// The first tab: what's been spent this week, month or year, the monthly budget, the last 7 days,
 /// where the money went and the latest expenses.
 struct HomeView: View {
+    /// Goes up by one each time a widget or control asks for Add Expense.
+    var addRequest = 0
     /// Switches to another tab, for "Insights ›" and "See all ›".
     var openTab: (RootView.AppTab) -> Void = { _ in }
 
@@ -46,6 +48,7 @@ struct HomeView: View {
         .overlay(alignment: .bottom) { FloatingActions { form = .add } }
         .sheet(item: $form) { ExpenseFormView(mode: $0) }
         .sheet(isPresented: $isEditingBudget) { BudgetView() }
+        .onChange(of: addRequest) { form = .add }
         #if DEBUG
         // For screenshots: launch with `-openAdd YES`.
         .onAppear { if UserDefaults.standard.bool(forKey: "openAdd") { form = .add } }

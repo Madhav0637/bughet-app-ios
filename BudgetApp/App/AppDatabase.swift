@@ -11,12 +11,15 @@ enum AppDatabase {
                 let container = try ModelContainer(for: Expense.self, Category.self,
                                                    configurations: ModelConfiguration(isStoredInMemoryOnly: true))
                 try DemoData.seed(into: container.mainContext)
+                WidgetSync.observeSaves(of: container)
                 return container
             }
             #endif
             let container = try ModelContainer(for: Expense.self, Category.self)
             // Seeding here (not in the UI) means the Shortcut works even if the app was never opened.
             try CategoryService(context: container.mainContext).seedDefaultsIfNeeded()
+            // Widgets follow every save, including ones made by the Log Expense intent.
+            WidgetSync.observeSaves(of: container)
             return container
         } catch {
             fatalError("Could not open the database: \(error)")

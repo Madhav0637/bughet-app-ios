@@ -27,6 +27,8 @@ struct LogExpenseIntent: AppIntent {
         let alert = try BudgetService(context: context).alert {
             try ExpenseService(context: context).add(merchant: merchant, amount: amount, category: category)
         }
+        // The save already refreshed the widgets; doing it again here is a no-op unless that was missed.
+        WidgetSync.refresh(context: context)
         // Still silent unless this expense takes the month past 80% or 100% of the budget.
         if let alert { await BudgetNotifier.post(alert) }
         return .result()

@@ -63,8 +63,14 @@ A minimal personal expense tracker for iPhone whose core advantage is **speed of
 - Activity: category chips, day totals, undo after delete
 - Notes in the CSV export
 
+### Added after 2.0: widgets
+- **Today widget:** Lock Screen circular (1 tile: today's total; with a budget, a ring for today's safe-to-spend amount judged at the start of the day), rectangular (2 tiles: today, budget left and per day, last 7 days) and inline; Home Screen small and medium (glassy background with the highlight colour, + button, last expense, 7-day bars). Tapping opens Home (1 tile, small) or Insights (2 tiles, medium).
+- **Log Expense control** (Lock Screen, Control Center, Action button): opens Add Expense through `OpenKokuIntent`.
+- **Data flow:** the app writes a small `WidgetSnapshot` JSON into the App Group `group.com.madhav0637.budgetapp` after every database save (so Back Tap entries update it too) and when the budget or highlight changes. The widget never opens the database; day and month rollovers are worked out when it draws, with timeline entries at the next midnights. `koku://home|activity|insights|add` links open screens.
+- iOS can't expand a Lock Screen widget in place, so the 2-tile size is the "expanded" version.
+
 ### Still out of scope
-Income, per-category budgets, recurring expenses, widgets, app lock, logging streaks, reminders, cloud sync or backup, multiple currencies, paise, receipts, automatic capture.
+Income, per-category budgets, recurring expenses, app lock, logging streaks, reminders, cloud sync or backup, multiple currencies, paise, receipts, automatic capture.
 
 ## 4. Tech stack
 

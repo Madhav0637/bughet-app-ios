@@ -40,6 +40,7 @@ Koku puts entry one gesture away. iPhone's **Back Tap** accessibility feature ru
 ## Features
 
 - **Back Tap quick entry.** "On what?" → amount (number pad) → category. Saved silently, in about five seconds.
+- **Widgets.** A one-tile Lock Screen widget with today's total in the system glass disc (plus a ring for today's safe-to-spend amount when there's a budget), a two-tile version with what's left of the budget and the last 7 days, a one-line version above the clock, and glassy small and medium Home Screen widgets with a + button. A **Log Expense** control for the Lock Screen, Control Center or the Action button opens Add Expense. Tapping a widget opens the matching screen.
 - **Home.** What you've spent this week, month or year, compared with the same point last time ("↓ 12% vs same time last month"), the last 7 days as a mini chart, where the money went and the latest expenses.
 - **Monthly budget.** A progress bar, what's left, and what's safe to spend each day for the rest of the month. A notification when you pass 80% and again at 100%, sent once each per month, including when you log with Back Tap.
 - **Insights.** Week, month or year, now or any time before (tap the arrows or swipe). A day-by-day (or month-by-month) bar chart with the peak highlighted and the average marked; tap a bar for its total. Categories with their share, biggest spend, most visited merchant, average per day, no-spend days 🎉 and top merchants.
@@ -114,6 +115,9 @@ BudgetApp/
 └── Shared/        # ₹ and date formatting, the expense row
 BudgetAppTests/    # Swift Testing suites
 BudgetAppUITests/  # XCUITest flows on sample data
+KokuWidget/        # Widget extension: the Today widget and the Log Expense control
+KokuShared/        # Shared by the app and the widget: snapshot, widget faces, colours, rupee formatting, links
+Config/            # Entitlements (App Group) and the Info.plist that registers koku:// links
 docs/SPEC.md       # Product spec and decision log
 tools/             # Script that draws the app icon
 ```
@@ -151,7 +155,7 @@ xcodebuild test -project BudgetApp.xcodeproj -scheme BudgetApp \
   -destination 'platform=iOS Simulator,name=iPhone 18 Pro'
 ```
 
-Add `-only-testing:BudgetAppTests` to skip the slower UI tests. For screenshots, debug builds accept `-demoData` (sample spending in a throwaway store), `-startTab home|activity|insights|settings`, `-openAdd YES`, `-appearance light|dark` and `-monthlyBudget 25000`.
+Add `-only-testing:BudgetAppTests` to skip the slower UI tests. For screenshots, debug builds accept `-demoData` (sample spending in a throwaway store), `-startTab home|activity|insights|settings`, `-openAdd YES`, `-appearance light|dark`, `-monthlyBudget 25000` and `-widgetGallery YES` (every widget size on one screen).
 
 ## Getting started
 
@@ -168,7 +172,7 @@ With a free Apple ID, the app stops opening after 7 days. Run it from Xcode agai
 
 ## Not in scope (yet)
 
-Income, per-category budgets, recurring expenses, widgets, iCloud sync (including with the Android app) and multiple currencies. See the spec for the full list.
+Income, per-category budgets, recurring expenses, iCloud sync (including with the Android app) and multiple currencies. See the spec for the full list.
 
 ---
 
